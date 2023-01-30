@@ -1,0 +1,21 @@
+server:
+  port: 8088
+  servlet:
+    context-path: /dev
+
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:xxxx/Yahtzee?serverTimezone=GMT%2b8&useSSL=false
+    username: your user name
+    password: your password
+    type: com.alibaba.druid.pool.DruidDataSource
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.wyl.yahtzee
