@@ -4,6 +4,7 @@ package com.wyl.yahtzee.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.wyl.yahtzee.entity.ScoreDetailEntity;
 import com.wyl.yahtzee.entity.vo.ScoreVo;
+import com.wyl.yahtzee.entity.vo.registerVo;
 
 /**
  * 
@@ -15,5 +16,7 @@ public interface YahtzeeService {
 
     void store(ScoreVo score);
 
+
+    int register(registerVo vo);
 
 }

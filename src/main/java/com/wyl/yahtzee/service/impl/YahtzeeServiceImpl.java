@@ -3,9 +3,12 @@ package com.wyl.yahtzee.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.wyl.yahtzee.dao.ScoreDao;
 import com.wyl.yahtzee.dao.ScoreDetailDao;
+import com.wyl.yahtzee.dao.UserDao;
 import com.wyl.yahtzee.entity.ScoreDetailEntity;
 import com.wyl.yahtzee.entity.ScoreEntity;
+import com.wyl.yahtzee.entity.UserEntity;
 import com.wyl.yahtzee.entity.vo.ScoreVo;
+import com.wyl.yahtzee.entity.vo.registerVo;
 import com.wyl.yahtzee.service.YahtzeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +31,9 @@ public class YahtzeeServiceImpl  implements YahtzeeService {
 
     @Autowired
     private ScoreDao scoreaDao;
+
+    @Autowired
+    private UserDao userDao;
 
     @Override
     public void store(ScoreVo score) {
@@ -65,6 +71,27 @@ public class YahtzeeServiceImpl  implements YahtzeeService {
         detail.setSum6(score.getSum6());
         detail.setSumAll(score.getSumAll());
         detailDao.insert(detail);
+    }
+
+    /**
+     * 注册功能
+     */
+    @Override
+    public int register(registerVo vo) {
+        //判断是否已有重复用户名
+        if(userDao.exists(new LambdaQueryWrapper<UserEntity>().eq(UserEntity::getName, vo.getUsername()))){
+            return -1;}
+        if(vo.getPassword().length()<6){
+            return -2;
+        }
+        UserEntity entity = new UserEntity();
+        entity.setHidden("no");
+        entity.setInvite("neice");
+        entity.setVip("no");
+        entity.setName(vo.getUsername());
+        entity.setPassword(vo.getPassword());
+        userDao.insert(entity);
+        return 1;
     }
 
 
